@@ -18,10 +18,12 @@ import (
 	"github.com/spf13/cobra"
 
 	"opendev.org/airship/airshipctl/cmd/secret/generate"
+	"opendev.org/airship/airshipctl/cmd/secret/get"
+	"opendev.org/airship/airshipctl/pkg/environment"
 )
 
 // NewSecretCommand creates a new command for managing airshipctl secrets
-func NewSecretCommand() *cobra.Command {
+func NewSecretCommand(rootSettings *environment.AirshipCTLSettings) *cobra.Command {
 	secretRootCmd := &cobra.Command{
 		Use: "secret",
 		// TODO(howell): Make this more expressive
@@ -29,6 +31,7 @@ func NewSecretCommand() *cobra.Command {
 	}
 
 	secretRootCmd.AddCommand(generate.NewGenerateCommand())
+	secretRootCmd.AddCommand(get.NewGetCommand(rootSettings))
 
 	return secretRootCmd
 }
